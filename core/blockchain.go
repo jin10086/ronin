@@ -224,6 +224,7 @@ type BlockChain struct {
 
 	shouldPreserve         func(*types.Block) bool // Function used to determine whether should preserve the given block.
 	shouldStoreInternalTxs bool
+	evmHook                vm.EVMHook
 }
 
 // NewBlockChain returns a fully initialised block chain using information
@@ -424,6 +425,14 @@ func NewBlockChain(db ethdb.Database, cacheConfig *CacheConfig, chainConfig *par
 	bc.loadLatestDirtyAccounts()
 
 	return bc, nil
+}
+
+func (bc *BlockChain) SetHook(evmHook vm.EVMHook) {
+	bc.evmHook = evmHook
+}
+
+func (bc *BlockChain) GetHook() vm.EVMHook {
+	return bc.evmHook
 }
 
 func (bc *BlockChain) loadLatestDirtyAccounts() {
