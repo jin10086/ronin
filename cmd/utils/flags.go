@@ -235,6 +235,10 @@ var (
 		Name:  "monitor.doublesign",
 		Usage: "Enable double sign monitoring",
 	}
+	MonitorFinalityVoteFlag = cli.BoolFlag{
+		Name:  "monitor.finalityvote",
+		Usage: "Enable finality vote monitoring",
+	}
 	StoreInternalTransactions = cli.BoolFlag{
 		Name:  "internaltxs",
 		Usage: "Enable storing internal transactions to db",
@@ -1829,6 +1833,10 @@ func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *ethconfig.Config) {
 	}
 
 	if ctx.GlobalBool(MonitorDoubleSign.Name) {
+		cfg.EnableMonitorDoubleSign = true
+	}
+
+	if ctx.GlobalBool(MonitorFinalityVoteFlag.Name) {
 		cfg.EnableMonitorDoubleSign = true
 	}
 }
